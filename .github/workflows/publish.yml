@@ -1,0 +1,35 @@
+name: Publish Docker Image
+
+on:
+  push:
+    tags: [ 'v[0-9]+.[0-9]+.[0-9]+' ]
+
+env:
+  IMAGE_NAME: alive
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker image
+        run: |
+           VERSION=${{ github.ref_name }}
+           PUBLISH_VERSION=${VERSION:1}
+           echo "Version to publish is ${PUBLISH_VERSION}"
+
+           docker build \
+             --push \
+             --target app \
+             --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest \
+             --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${PUBLISH_VERSION} \
+             .
