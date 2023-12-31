@@ -1,37 +1,42 @@
 package main
 
 import (
-	"os"
 	"fmt"
+	"os"
 	"strconv"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"docker-alive/alive/routes"
 )
 
+var defaultPort int = 4444
 
-// getLiveness responds with HTTP 200 OK
-func getLiveness(c *gin.Context) {
-	c.String(http.StatusOK, "OK")
+func getPort() int {
+	portStr := os.Getenv("PORT")
+	if portStr == "" {
+		portStr = strconv.Itoa(defaultPort)
+	}
+
+	port, err := strconv.Atoi(portStr)
+	if err != nil {
+		panic(fmt.Sprintf("Invalid port number: %s", err))
+	}
+
+	return port
 }
 
 func main() {
 	router := gin.Default()
-	
-	router.GET("/liveness", getLiveness)
-	
-	portStr := os.Getenv("PORT")
-	if portStr == "" {
-		portStr = "4444"
-	}
-	
-	// convert the port string to an integer
-	port, err := strconv.Atoi(portStr)
-	if err != nil {
-		panic(fmt.Sprintf("Invalid port number: ", err))
-	}
 
+	router.GET("/liveness", routes.Liveness)
+
+	port := getPort()
 	addr := fmt.Sprintf("0.0.0.0:%d", port)
 	fmt.Println("Listening on", addr)
-	router.Run(addr)
+
+	err := router.Run(addr)
+	if err != nil {
+		panic(fmt.Sprintf("Error starting server: %s", err))
+	}
 }

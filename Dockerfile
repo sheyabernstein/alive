@@ -1,10 +1,14 @@
+ARG GIN_MODE="release"
+
 FROM alpine as base
 
-ENV GIN_MODE="release" \
-    PORT=4444
-    
-RUN apk add --no-cache curl   
+ARG GIN_MODE
 
+ENV PORT=4444 \
+    GIN_MODE=$GIN_MODE
+
+RUN apk add --no-cache curl && \
+    rm -rf /var/cache/apk/*
 
 FROM golang as app-builder
 
@@ -15,7 +19,6 @@ RUN go mod download
 
 COPY alive .
 
-RUN go build -o server .
 RUN go build \
   -ldflags "-linkmode external -extldflags -static" \
   -o server .

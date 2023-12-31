@@ -1,4 +1,4 @@
-module sheyabernstein/docker-alive
+module docker-alive/alive
 
 go 1.21.5
 
