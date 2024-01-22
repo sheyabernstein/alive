@@ -1,14 +1,11 @@
 ARG GIN_MODE="release"
 
-FROM alpine as base
+FROM busybox as base
 
 ARG GIN_MODE
 
 ENV PORT=4444 \
     GIN_MODE=$GIN_MODE
-
-RUN apk add --no-cache curl && \
-    rm -rf /var/cache/apk/*
 
 FROM golang as app-builder
 
