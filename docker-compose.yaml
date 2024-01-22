@@ -11,7 +11,7 @@ services:
     ports:
       - "4444:4444"
     healthcheck:
-      test: "curl --fail -s http://127.0.0.1:4444/liveness || exit 1"
+      test: "wget --spider -q http://127.0.0.1:4444/healthz || exit 1"
       interval: 15s
       retries: 4
       start_period: 15s
