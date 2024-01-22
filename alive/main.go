@@ -29,6 +29,7 @@ func getPort() int {
 func main() {
 	router := gin.Default()
 
+	router.GET("/healthz", routes.Health)
 	router.GET("/liveness", routes.Liveness)
 
 	port := getPort()
