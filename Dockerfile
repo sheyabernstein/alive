@@ -17,7 +17,7 @@ RUN go mod download
 COPY alive .
 
 RUN go build \
-  -ldflags "-linkmode external -extldflags -static" \
+  -ldflags "-linkmode external -extldflags -static -s -w" \
   -o server .
   
 
