@@ -15,6 +15,12 @@ docker run --name alive -d -p 4444:4444 sheyabernstein/alive:latest
 Alternatively, use the included docker-compose file.
 ### API Reference
 
+#### Health
+
+```http
+GET /healtz
+```
+
 #### Liveness
 
 ```http
