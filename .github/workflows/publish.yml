@@ -3,6 +3,8 @@ name: Publish Docker Image
 on:
   push:
     tags: [ 'v[0-9]+.[0-9]+.[0-9]+' ]
+  schedule:
+    - cron: '0 0 1 * *'  # Every first of the month at midnight
 
 env:
   IMAGE_NAME: alive
