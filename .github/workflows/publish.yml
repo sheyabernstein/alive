@@ -33,6 +33,13 @@ jobs:
       - name: Set publish version
         run: |
            VERSION=${{ github.ref_name }}
+
+           if [[ ! $VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+             echo "Using the latest git tag instead of VERSION=$VERSION"
+             git fetch --tags
+             VERSION=$(git tag -l 'v[0-9]*' --sort=-creatordate | head -n 1)
+           fi
+
            PUBLISH_VERSION=${VERSION:1}
            echo "Version to publish is ${PUBLISH_VERSION}"
            echo "PUBLISH_VERSION=${PUBLISH_VERSION}" >> $GITHUB_ENV
