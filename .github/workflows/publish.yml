@@ -50,6 +50,7 @@ jobs:
           context: .
           target: app
           platforms: linux/amd64,linux/arm64
+          pull: true
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
