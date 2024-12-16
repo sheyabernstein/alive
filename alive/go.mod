@@ -1,4 +1,4 @@
-module docker-alive/alive
+module alive/alive
 
 go 1.21.6
 

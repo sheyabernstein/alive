@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"docker-alive/alive/routes"
+	"alive/alive/routes"
 )
 
 var defaultPort int = 4444
