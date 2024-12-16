@@ -1,13 +1,13 @@
 ARG GIN_MODE="release"
 
-FROM busybox as base
+FROM busybox AS base
 
 ARG GIN_MODE
 
 ENV PORT=4444 \
     GIN_MODE=$GIN_MODE
 
-FROM golang as app-builder
+FROM golang AS app-builder
 
 WORKDIR /builder
 
@@ -21,7 +21,7 @@ RUN go build \
   -o server .
   
 
-FROM base as app
+FROM base AS app
 
 COPY --from=app-builder --chown=nobody:nobody /builder/server .
 
