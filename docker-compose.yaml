@@ -1,6 +1,6 @@
 services:
   alive:
-    image: sheyabernstein/alive:latest
+    image: ghcr.io/sheyabernstein/alive:latest
     container_name: alive
     restart: unless-stopped
     build:
