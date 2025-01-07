@@ -1,8 +1,6 @@
-version: "3"
-
 services:
   alive:
-    image: sheyabernstein/alive:latest
+    image: ghcr.io/sheyabernstein/alive:latest
     container_name: alive
     restart: unless-stopped
     build:
@@ -13,6 +11,5 @@ services:
     healthcheck:
       test: "wget --spider -q http://127.0.0.1:4444/healthz || exit 1"
       interval: 15s
-      retries: 4
-      start_period: 15s
-      timeout: 10s
+      retries: 2
+      timeout: 3s
